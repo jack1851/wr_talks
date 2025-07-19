@@ -1,0 +1,63 @@
+\documentclass[aspectratio=169]{beamer}
+
+\input{preamble}
+
+\usepackage{pgfpages}
+\setbeamertemplate{note page}[plain]
+\setbeameroption{show notes}
+\addtobeamertemplate{note page}{}{\thispdfpagelabel{notes:\insertframenumber}}
+
+\newcommand{\ssection}[1]{%
+  \section{#1}%
+  \sectionframe{#1}%
+}%
+
+\newenvironment{sframe}[1]{%
+  \subsection{#1}%
+  \begin{frame}{#1}%
+}{%
+  \end{frame}%
+}%
+
+\title[$\mathrm{W_R}$ Boson and Heavy Neutrino Search]{%
+  Search for a Right-Handed W Boson and Heavy Neutrino of the Left-Right Symmetric Standard Model%
+}
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\note[itemize]{
+\item Hello everyone!
+}
+
+\section{Background}
+
+\subsection{Handedness and Weak Interactions}
+
+\begin{frame}{Parity Violation in $\beta$ Decay}
+    Slide
+\end{frame}
+
+\note[itemize]{
+\footnotesize
+\item Point 1.
+}
+
+\begin{backup}
+  \subsection{Run 2 Results}
+
+  \begin{frame}{Signal Region}
+  \end{frame}
+  
+  \note[itemize]{
+    \footnotesize
+    \item A previous verision of this analysis did unblind, except they used the leading jet $p_T$ spectrum to 
+     reweight on. And here are the results for the signal region. 
+  }
+
+\end{backup}
+
+\end{document} 
