@@ -68,7 +68,6 @@ just clean   # removes out/ and aux files
 Inside any talk folder:
 
 ```bash
-just init-present   # creates venv/ + installs pympress
 just present        # launches pympress out/slides.pdf
 ```
 
