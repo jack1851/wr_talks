@@ -1,0 +1,496 @@
+% shared import of packages and command definitions for slides and text
+
+\usepackage{silence} % silence warnings
+% dont have tikz-feynman tell me LuaTex would be better on every vertex and line
+\WarningFilter{tikz-feynman}{The key you tried}
+
+\usepackage{epsfig} % Allows the inclusion of eps files
+\usepackage{epic} % Enhanced picture mode
+\usepackage{eepic} % Extensions for epic
+\usepackage{url} % URL handling
+\usepackage{longtable} % Tables that continue onto multiple pages
+\usepackage{mathrsfs} % Support for \mathscr script
+\usepackage{multirow} % Span rows in tables
+\usepackage{bigstrut} % Space struts in tables up and down
+\usepackage{amssymb} % AMS math symbols and helpers
+\usepackage{graphicx} % Enhanced graphics support
+\usepackage{setspace} % Adjust spacing in captions, single by default
+\usepackage{xspace} % Automatically adjusting space after macros
+\usepackage{amsmath} % \text, and other math formatting options
+\usepackage[version=4]{mhchem} % For chemistry equations (e.g. Colbalt decay in Wu experiment)
+\usepackage{siunitx} % \num{} formatting and SI unit formatting
+\usepackage{booktabs} % Enhanced tables with \toprule, etc.
+\usepackage{hyperref} % Add clickable links to other parts of the document
+\usepackage{subcaption}
+\usepackage{graphicx} % Allows including images
+\usepackage{relsize} % for \smaller in \babar
+
+\usepackage[noabbrev,capitalise]{cleveref} % Automatically determine \cref type
+
+% Configure the cleveref package
+\newcommand{\creflastconjunction}{, and } % Always use the serial comma
+
+\usepackage[compat=1.1.0]{tikz-feynman} % for feynman diagrams
+\tikzfeynmanset{
+    warn luatex = {false}
+}
+
+\usepackage{hepunits}
+% Configure the siunitx package
+\sisetup{
+    group-separator = {,}, % Use , to separate groups of digits, like 12,345
+    list-final-separator = {, and } % Always use the serial comma in \SIlist
+}
+
+\newcommand{\fourgev}{\qty{4}{GeV}\xspace}
+\newcommand{\eightgev}{\qty{8}{GeV}\xspace}
+\newcommand{\ecal}{ECal\xspace}
+\newcommand{\hcal}{HCal\xspace}
+
+% absolute, official way according to Bertrand
+\newcommand{\babar}{%
+  \mbox{\slshape B\kern-0.1em{\smaller A}\kern-0.1em B\kern-0.1em{\smaller A\kern-0.2em R}}%
+  \xspace
+}
+
+\usepackage{acronym}
+\acrodef{dm}[DM]{Dark Matter}
+\acrodef{sm}[SM]{Standard Model}
+\acrodef{gr}[GR]{General Relativity}
+\acrodef{cmb}[CMB]{Cosmic Microwave Background}
+\acrodef{bao}[BAO]{Baryon Acoustic Oscillations}
+\acrodef{hep}[HEP]{High Energy Physics}
+\acrodef{wimp}[WIMP]{Weakly Interacting Massive Particle}
+\acrodef{ecal}[ECal]{Electromagnetic Calorimeter}
+\acrodef{hcal}[HCal]{Hadronic Calorimeter}
+\acrodef{ldmx}[LDMX]{Light Dark Matter eXperiment}
+\acrodef{hps}[HPS]{Heavy Photon Search experiment}
+\acrodef{jlab}[JLab]{Thomas Jefferson National Accelerator Laboratory}
+\acrodef{cebaf}[CEBAF]{Continuous Electron Beam Accelerator Facility}
+\acrodef{kf}[KF]{Kalman Filter}
+\acrodef{gbl}[GBL]{General Broken Lines}
+\acrodef{svt}[SVT]{Silicon Vertex Tracker}
+\acrodef{bdt}[BDT]{Boosted Decision Tree}
+\acrodef{eot}[EoT]{Electrons on Target}
+\acrodef{eat}[EaT]{\ac{ecal} as Target}
+\acrodef{mm}[MM]{Missing Momentum}
+\acrodef{simp}[SIMP]{Strongly-Interacting Massive Particle}
+\acrodef{vps}[VPS]{Vertex Projection Significance}
+\acrodef{fee}[FEE]{Full Energy Electron}
+\acrodef{oim}[OIM]{Optimum Interval Method}
+\acrodef{pe}[PE]{photoelectrons}
+
+\def\minyzero{$y_{0,\min}$\xspace}
+\def\maxyzeroerr{$\sigma_{y_0,\max}$\xspace}
+\def\Psum{$P_\mathrm{sum}$\xspace}
+
+%Environment for drawing on pictures using tikz
+%   #1 Width to adjust image to (default: \textwidth)
+%   #2 Filepath to image
+%Use like:
+%   \begin{tikzimage}[height]{filepath}
+%       ...\draw...( coordinates are in fractions of width/height of image )
+%   \end{tikzimage}
+\newenvironment{tikzimage}[2][\textwidth]{%
+    \begin{tikzpicture}
+        \node[anchor=south west, inner sep=0] (image) at (0,0)
+            {\includegraphics[width=#1]{{#2}}};
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+}{%
+        \end{scope}
+    \end{tikzpicture}
+}%
+
+
+% HPS Diagrams
+%   using tikz math library to name variables to helpful names
+%   define command to draw boilerplate target/L1/L2
+\usetikzlibrary{math,decorations.pathreplacing}
+   
+% colors for diagram
+\definecolor{HPSTarget}{rgb}{0.55,0.52,0.54}
+\definecolor{HPSTracker}{rgb}{0.0,0.5,0.5}
+\definecolor{HPSEcal}{rgb}{0.8,0.5,0.2}
+
+\tikzmath{%
+  \openingslope = 0.15; % y changer per x change
+  \sensorsep = 0.12; % separation between sensors in a layer
+  \sensorlen = 1.5; % length of sensors in vertical direction
+  \targetx = -3.0;
+  \layeronex = -0.2;
+  \layertwox = 2.0;
+  \targethalfthick = 0.1;
+  \ecalbarlen=1.5;
+  \ecalbarwidth=0.3;
+  % can't have a blank line in this block
+  %
+  % compute locations
+  \layeroney = (\layeronex - \targetx) * \openingslope;
+  \layertwoy = (\layertwox - \targetx) * \openingslope;
+  \sensorhalfsep = \sensorsep / 2;
+  \reflineendx = \layertwox+0.5;
+  \reflineendy = (\reflineendx - \targetx) * \openingslope;
+  % paths for truly displaced
+  \eleslope=(2-0.1)/(2.5-\targetx-2);
+  \eleyzero=\eleslope*(-2.0)+0.1;
+  \elelayeronestereoy=\eleslope*(\layeronex - \sensorhalfsep+1.0)+0.1;
+  \elelayeroneaxialy=\eleslope*(\layeronex + \sensorhalfsep+1.0)+0.1;
+  \elelayertwostereoy=\eleslope*(\layertwox - \sensorhalfsep+1.0)+0.1;
+  \elelayertwoaxialy=\eleslope*(\layertwox + \sensorhalfsep+1.0)+0.1;
+  \posslope=(-1.8-0.1)/(2.5-\targetx-2);
+  \posyzero=\posslope*(-2.0)+0.1;
+  \poslayeronestereoy=\posslope*(\layeronex - \sensorhalfsep+1.0)+0.1;
+  \poslayeroneaxialy=\posslope*(\layeronex + \sensorhalfsep+1.0)+0.1;
+  \poslayertwostereoy=\posslope*(\layertwox - \sensorhalfsep+1.0)+0.1;
+  \poslayertwoaxialy=\posslope*(\layertwox + \sensorhalfsep+1.0)+0.1;
+  % paths for not displaced
+  \ndeleslope = (2-0)/(2.5-\targetx-\targethalfthick);
+  \ndelelayeronestereoy=\ndeleslope*(\layeronex - \sensorhalfsep - \targetx - \targethalfthick);
+  \ndelelayeroneaxialy=\ndeleslope*(\layeronex + \sensorhalfsep - \targetx - \targethalfthick);
+  \ndelelayertwostereoy=\ndeleslope*(\layertwox - \sensorhalfsep - \targetx - \targethalfthick);
+  \ndelelayertwoaxialy=\ndeleslope*(\layertwox + \sensorhalfsep - \targetx - \targethalfthick);
+  \ndposslope = (-1.8-0)/(2.5-\targetx-\targethalfthick);
+  \ndposlayeronestereoy=\ndposslope*(\layeronex - \sensorhalfsep - \targetx - \targethalfthick);
+  \ndposlayeroneaxialy=\ndposslope*(\layeronex + \sensorhalfsep - \targetx - \targethalfthick);
+  \ndposlayertwostereoy=\ndposslope*(\layertwox - \sensorhalfsep - \targetx - \targethalfthick);
+  \ndposlayertwoaxialy=\ndposslope*(\layertwox + \sensorhalfsep - \targetx - \targethalfthick);
+  % paths for fake displaced
+  \fdeleslope = (2-0)/(2.5-\targetx-\targethalfthick);
+  \fdelelayeronestereoy=\fdeleslope*(\layeronex - \sensorhalfsep - \targetx - \targethalfthick);
+  \fdelelayeroneaxialy=\fdeleslope*(\layeronex + \sensorhalfsep - \targetx - \targethalfthick);
+  \fdelelayertwostereoy=\fdeleslope*(\layertwox - \sensorhalfsep - \targetx - \targethalfthick);
+  \fdelelayertwoaxialy=\fdeleslope*(\layertwox + \sensorhalfsep - \targetx - \targethalfthick);
+  \fdposx = \targetx+1.0;
+  \fdposy = \fdeleslope*(\fdposx-\targetx-\targethalfthick);
+  \fdposslope = (-1.8-\fdposy)/(2.5-\fdposx);
+  \fdposyzero = \fdposslope*(\targetx-\fdposx)+\fdposy;
+  \fdbadhitstereoy = \fdposslope*(\layeronex-\sensorhalfsep-\fdposx)+\fdposy;
+  \fdbadhitaxialy = \fdposslope*(\layeronex+\sensorhalfsep-\fdposx)+\fdposy;
+  \fdposlayertwostereoy=\fdposslope*(\layertwox - \sensorhalfsep - \fdposx)+\fdposy;
+  \fdposlayertwoaxialy=\fdposslope*(\layertwox + \sensorhalfsep - \fdposx)+\fdposy;
+  % true path is from center of target to L2 hits
+  \fdpostruslope = (\fdposslope*(\layertwox-\fdposx)+\fdposy-0)/(\layertwox-\targetx-\targethalfthick);
+  \fdtruhitstereoy = \fdpostruslope*(\layeronex-\sensorhalfsep-\targetx-\targethalfthick);
+  \fdtruhitaxialy = \fdpostruslope*(\layeronex+\sensorhalfsep-\targetx-\targethalfthick);
+}
+
+\tikzset{
+  vertex/.style={diamond,fill,inner sep=1.5pt},
+  hit/.style={circle,fill,inner sep=1.5pt},
+  miss/.style={circle,draw,fill=white,inner sep=1.0pt}
+}
+
+\newcommand{\drawhpsfirsttwolayers}{%
+  \draw[HPSTracker, very thick]
+    (\layeronex-\sensorhalfsep,-\layeroney-\sensorlen)
+    -- (\layeronex-\sensorhalfsep,-\layeroney)
+    (\layeronex+\sensorhalfsep,-\layeroney-\sensorlen)
+    -- (\layeronex+\sensorhalfsep,-\layeroney)
+    (\layeronex-\sensorhalfsep,\layeroney+\sensorlen)
+    -- (\layeronex-\sensorhalfsep,\layeroney)
+    (\layeronex+\sensorhalfsep,\layeroney+\sensorlen)
+    -- (\layeronex+\sensorhalfsep,\layeroney);
+  \draw[HPSTracker] (\layeronex,\layeroney+\sensorlen) node[above] {L1};
+  
+  \draw[HPSTracker, very thick]
+    (\layertwox-\sensorhalfsep,-\layertwoy-\sensorlen)
+    -- (\layertwox-\sensorhalfsep,-\layertwoy)
+    (\layertwox+\sensorhalfsep,-\layertwoy-\sensorlen)
+    -- (\layertwox+\sensorhalfsep,-\layertwoy)
+    (\layertwox-\sensorhalfsep,\layertwoy+\sensorlen)
+    -- (\layertwox-\sensorhalfsep,\layertwoy)
+    (\layertwox+\sensorhalfsep,\layertwoy+\sensorlen)
+    -- (\layertwox+\sensorhalfsep,\layertwoy);
+  \draw[HPSTracker] (\layertwox,\layertwoy+\sensorlen) node[above] {L2};
+  
+  \draw[gray,dashed] (\targetx,0) -- (\reflineendx,\reflineendy);
+  \draw[gray,dashed] (\targetx,0) -- (\reflineendx,0);
+  \draw[gray,dashed] (\targetx,0) -- (\reflineendx,-\reflineendy);
+  
+  \fill[HPSTarget] (\targetx-\targethalfthick,+1) rectangle (\targetx+\targethalfthick,-1);
+  \draw[HPSTarget] (\targetx,-1) node[below] {Target};
+}
+
+\newcommand{\drawhps}{%
+  \foreach \layerX/\layerY in {
+    0.0/0.15,
+    2.0/0.30,
+    4.0/0.45,
+    6.0/0.60,
+    8.0/0.75,
+    10.0/0.90
+  }{
+    \draw[HPSTracker, very thick]
+      (\layerX-\sensorhalfsep,-\layerY-\sensorlen)
+      -- (\layerX-\sensorhalfsep,-\layerY)
+      (\layerX+\sensorhalfsep,-\layerY-\sensorlen)
+      -- (\layerX+\sensorhalfsep,-\layerY)
+      (\layerX-\sensorhalfsep,\layerY+\sensorlen)
+      -- (\layerX-\sensorhalfsep,\layerY)
+      (\layerX+\sensorhalfsep,\layerY+\sensorlen)
+      -- (\layerX+\sensorhalfsep,\layerY);
+  }
+  \draw[HPSTracker] (9.0,0.75+\sensorlen) node[above,font=\LARGE] {SVT};
+
+  \foreach \barY in {
+    0.9,
+    1.2,
+    1.5,
+    1.8,
+    2.1
+  }{
+    \draw[draw=HPSEcal,fill=HPSEcal!20!white]
+      (12.0,\barY) rectangle (12+\ecalbarlen,\barY+\ecalbarwidth)
+      (12.0,-\barY) rectangle (12+\ecalbarlen,-\barY-\ecalbarwidth)
+    ;
+  }
+  \draw[HPSEcal] (12+\ecalbarlen/2,2.1+\ecalbarwidth) node[above,font=\LARGE] {ECal};
+
+  \draw[gray,dashed] (\targetx,0) -- (12+\ecalbarlen+0.5,0);
+  
+  \fill[HPSTarget] (\targetx-\targethalfthick,+1) rectangle (\targetx+\targethalfthick,-1);
+  \draw[HPSTarget] (\targetx,-1) node[below left,font=\LARGE] {Target};
+
+  \node (decay) at (\targetx+1.0,0.05) [circle,fill,inner sep=1.5pt] {};
+  \node (production) at (\targetx,0.0) [circle,fill,inner sep=1.5pt] {};
+
+  \draw[black,very thick,->]
+    (\targetx-1.5,0.0) node[anchor=south east,font=\Large] {\(e^-\)} -- (\targetx-0.2,0.0);
+  \draw[black,very thick,->]
+    (decay) -- (11.8,1.6) node[anchor=south east,font=\Large] {\(e^-\)};
+  \draw[black,very thick,->]
+    (decay) -- (11.8,-2.2) node[anchor=north east,font=\Large] {\(e^+\)};
+  \draw[black,very thick,->]
+    (production) -- (-1.0,-0.5-\sensorlen) node[anchor=east,font=\Large] {\(e^-\)};
+
+  \draw[blue,thick,->] (production) -- (decay) node[midway,above,font=\Large] {\(V_D\)};
+}
+
+%---------------------------------------------------------------------
+% UMN Custom Beamer Theme Preamble
+%---------------------------------------------------------------------
+
+%---------------------------------------------------------------------
+% Geometry Adjustments
+%---------------------------------------------------------------------
+\geometry{mag=1600,truedimen} % Adjust layout scaling
+
+%---------------------------------------------------------------------
+% UMN Color Definitions (University of Minnesota colors)
+%---------------------------------------------------------------------
+\definecolor{UMNMaroon}{RGB}{122,0,25}
+\definecolor{UMNLightGold}{RGB}{255,215,95}
+\definecolor{UMNGold}{RGB}{255,204,51}
+\definecolor{UMNStormy}{RGB}{64,77,91}
+\definecolor{UMNSunny}{RGB}{0,149,182}
+\definecolor{UMNLightGray}{RGB}{213,214,210}
+
+\definecolor{GopherMaroon}{RGB}{122, 0, 25}
+\definecolor{GopherGold}{RGB}{255, 204, 51}
+\definecolor{GopherLightGold}{RGB}{255, 222, 122}
+\definecolor{GopherDarkMaroon}{RGB}{91, 0, 19}
+
+%---------------------------------------------------------------------
+% Packages specific to this theme
+%---------------------------------------------------------------------
+\usepackage{textpos}    % For precise positioning
+\usepackage{epstopdf}    % Convert EPS images to PDF
+\usepackage{soul}        % For highlighting and letter spacing
+\usepackage{xifthen}     % For conditional logic in commands
+\usepackage{listings}    % For code listings
+
+
+\usetikzlibrary{calc,intersections}
+% Define a custom background color for listings if needed
+%\definecolor{backcolour}{rgb}{0.95,0.95,0.92} % Consider using this for consistency
+
+%---------------------------------------------------------------------
+% Listing Style Definition
+%---------------------------------------------------------------------
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{UMNLightGray},
+    commentstyle=\color{UMNStormy},
+    keywordstyle=\color{UMNMaroon},
+    numberstyle=\tiny\color{UMNMaroon},
+    stringstyle=\color{UMNSunny},
+    basicstyle=\ttfamily\footnotesize,
+    emph={ldmx}, % Note: Ensure no trailing spaces unless intentional
+    emphstyle=\color{UMNMaroon},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+%---------------------------------------------------------------------
+% Custom Commands and Environments
+%---------------------------------------------------------------------
+
+% Bold and color text command.
+\newcommand{\boldcol}[2]{%
+    {\color{#1}\textbf{#2}}\xspace
+}%
+
+% Slide section title command for intra-slide division.
+\newcommand{\framesection}[1]{%
+  \boldcol{UMNStormy}{#1}\hspace{1em}%
+}%
+
+% Code inclusion commands for listings.
+\newcommand{\codefile}[2]{%
+    \lstinputlisting[#1]{#2}
+}%
+
+\newcommand{\code}[1]{%
+  \tikz[baseline=(codebox.base)]{
+    \node[inner sep=1pt,outer sep=0pt,draw=UMNStormy,line width=0.05mm,fill=UMNLightGray,rounded corners=0.03cm] (codebox)
+      {\textcolor{UMNSunny}{#1}};
+  }%
+}%
+
+% Checkmark and crossmark definitions using bbding.
+\usepackage{bbding}
+\newcommand{\checkmarkicon}{{\color{UMNSunny}\Checkmark}}
+\newcommand{\crossmarkicon}{{\color{UMNMaroon}\XSolidBrush}}
+
+% List item markers for done, todo, good, and bad items.
+\newcommand{\done}{\item[$\color{UMNMaroon}\boxtimes$]}
+\newcommand{\todo}{\item[$\color{UMNMaroon}\square$]}
+\newcommand{\good}{\item[\checkmarkicon]}
+\newcommand{\bad}{\item[\crossmarkicon]}
+
+% Hyperlink button command
+\newcommand{\hlink}[2]{%
+    \href{#1}{\beamergotobutton{#2}}
+}%
+
+% Slide layout commands for including plots/images.
+\newcommand{\oneplotslide}[3]{% #1=Title, #2=Subtitle, #3=Image path
+    \begin{frame}
+        \frametitle{#1}
+        \framesubtitle{#2}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{#3}
+        \end{figure}
+    \end{frame}
+}%
+
+\newcommand{\fourtileslide}[6]{% #1=Title, #2=Subtitle, #3-#6=Tile contents
+    \begin{frame}
+        \frametitle{#1}
+        \framesubtitle{#2}
+        \begin{figure}[h]
+            \centering
+            \begin{tabular}{cc}
+                #3 & #4 \\
+                #5 & #6
+            \end{tabular}
+        \end{figure}
+    \end{frame}
+}%
+
+\newcommand{\fourplotslide}[6]{%
+    \fourtileslide{#1}{#2}%
+        {\ifthenelse{\isempty{#3}}{}{ \includegraphics[height=0.4\textheight]{#3}}}%
+        {\ifthenelse{\isempty{#4}}{}{ \includegraphics[height=0.4\textheight]{#4}}}%
+        {\ifthenelse{\isempty{#5}}{}{ \includegraphics[height=0.4\textheight]{#5}}}%
+        {\ifthenelse{\isempty{#6}}{}{ \includegraphics[height=0.4\textheight]{#6}}}%
+}%
+
+% Environment for a slide with a picture and accompanying comments.
+\newenvironment{figurecomments}[1]{% #1=Image path
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[height=0.7\textheight]{#1}
+      \end{figure}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \footnotesize
+}{%
+    \end{column}
+  \end{columns}
+}%
+
+% A full slide for section titles.
+\newcommand{\sectionframe}[1]{%
+  \begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}#1\par%
+    \end{beamercolorbox}
+    \vfill
+  \end{frame}
+}%
+
+% Backup slides environment to exclude from main slide count.
+\newenvironment{backup}[1][Questions]{%
+  \sectionframe{#1}%
+  \newcounter{finalframe}%
+  \setcounter{finalframe}{\value{framenumber}}%
+}{%
+  \setcounter{framenumber}{\value{finalframe}}%
+}%
+
+%---------------------------------------------------------------------
+% Beamer Presentation Mode Settings
+%---------------------------------------------------------------------
+\mode<presentation> {
+  \usetheme{Madrid}
+  \usefonttheme{serif}
+  \addtobeamertemplate{frametitle}{}{%
+      \begin{textblock*}{100mm}(0.85\textwidth,-0.95cm)
+          \includegraphics[height=0.9cm]{goldy_leaning.png}
+      \end{textblock*}
+      \begin{textblock*}{100mm}(0.95\textwidth,-0.95cm)
+        \includegraphics[height=0.9cm]{cms_logo.png}
+      \end{textblock*}
+  }
+
+  % Beamer color definitions and palette
+  \setbeamercolor{structure}{fg=UMNStormy} % Colors blocks and the 'Figure' caption heading. Default fg=UMNStormy.
+  \setbeamercolor{palette primary}{fg=UMNMaroon, bg=GopherLightGold} % Bottom right corner. fg is text, bg is backgroun. Default fg=UMNMaroon, bg=UMNLightGray.
+  \setbeamercolor{palette secondary}{fg=UMNMaroon, bg=GopherGold} % Bottom middle. Default fg=UMNMaroon, bg=white.
+  \setbeamercolor{palette tertiary}{fg=UMNMaroon, bg=GopherLightGold} % Bottom left. Default fg=UMNLightGold, bg=UMNStormy
+  \setbeamercolor{frametitle}{fg=UMNMaroon, bg=GopherLightGold} % Title of each frame. Default fg=UMNLightGold, bg=UMNMaroon
+  \setbeamercolor{title}{fg=UMNMaroon, bg=GopherLightGold} % First title slide. Default fg=UMNMaroon, bg=UMNLightGray
+  \setbeamercolor{section in toc}{fg=UMNMaroon} % Table of content title colors. Default fg=UMNMaroon
+  \setbeamercolor{section in toc shaded}{fg=UMNMaroon} % ? Default fg=UMNMaroon
+  \setbeamercolor{button}{fg=UMNLightGold, bg=UMNMaroon} % ? Default fg=UMNLightGold, bg=UMNMaroon
+  \setbeamercolor{palette sidebar secondary}{fg=UMNMaroon} % ? Default fg=UMNLightGold, bg=UMNMaroon
+  \setbeamercolor{section in sidebar shaded}{fg=UMNMaroon} % ? Default fg=UMNLightGold, bg=UMNMaroon
+
+  \setbeamertemplate{itemize item}{\color{UMNMaroon}$\blacksquare$}
+  \setbeamertemplate{itemize subitem}{\color{UMNLightGold}$\blacktriangleright$}
+  \setbeamertemplate{enumerate items}[default]
+  \setbeamertemplate{sections/subsections in toc}[sections numbered]
+
+  % Remove navigation symbols if not needed
+  \setbeamertemplate{navigation symbols}{}
+
+  \setbeamercolor{block body alerted}{fg=UMNSunny, bg=UMNMaroon!20}
+  \setbeamercolor{block title alerted}{fg=UMNLightGold, bg=UMNMaroon}
+}
+
+%---------------------------------------------------------------------
+% Author and Institution Details
+%---------------------------------------------------------------------
+\newcommand{\with}{} % Placeholder; fill or remove if not needed
+
+\author{Billy Jackson} % Your name
+\institute[UMN]{%
+  Alpana On-boarding Talk \\[2mm]
+  University of Minnesota \\[2mm]
+  \href{mailto:jack1851@umn.edu}{jack1851@umn.edu} \\[2mm]
+  \begin{tabular}{p{0.4\textwidth}}\centering\with\end{tabular}
+}

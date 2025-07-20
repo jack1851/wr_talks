@@ -1,0 +1,848 @@
+\documentclass[aspectratio=169]{beamer}
+
+\input{preamble}
+
+\usepackage{pgfpages}
+\setbeamertemplate{note page}[plain]
+\setbeameroption{hide notes}
+\addtobeamertemplate{note page}{}{\thispdfpagelabel{notes:\insertframenumber}}
+
+\newcommand{\ssection}[1]{%
+  \section{#1}%
+  \sectionframe{#1}%
+}%
+
+\newenvironment{sframe}[1]{%
+  \subsection{#1}%
+  \begin{frame}{#1}%
+}{%
+  \end{frame}%
+}%
+
+\title[$\mathrm{W_R}$ Boson and Heavy Neutrino Search]{%
+  Search for a Right-Handed W Boson and Heavy Neutrino of the Left-Right Symmetric Standard Model%
+}
+
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\note[itemize]{
+\item Hello everyone! For those of you who don't know me, my name is Billy.
+  I am one of Jeremy's graduate students here with the CMS group, and in this 
+  seminar I am going to talk about our search for a right-handed W boson and 
+  heavy neutrino of the Left-Right Symmetric Standard Model. 
+}
+
+%\begin{frame}{Outline}
+%  \begin{columns}
+%    \begin{column}{0.5\textwidth}
+%      \tableofcontents
+%    \end{column}
+%    \begin{column}{0.5\textwidth}
+%      \includegraphics[width=0.9\textwidth]{../figures/experiment/cms-slice}
+%      \\
+%      \resizebox{0.9\textwidth}{!}{\input{../figures/theory/wr-decay}}
+%    \end{column}
+%  \end{columns}
+%\end{frame}
+
+%\note[itemize]{
+%\item I will begin with some background, and explain the concept of handedness in physics.
+%  So, what do we exactly mean when we say the weak force is left-handed and we are searching
+%  for a right-handed W and neutrino.
+%\item I will then discuss the class of models, called left-right symmetric models, 
+%    that adds these particles to the standard model.
+%\item We search for these particles using data from the CMS detector at the Large 
+%  Hadron Collider, most people here familiar with these to some degree but I'll quickly
+%  describe them.
+%\item I will explain the general search strategy that we use to look for these particles 
+%  using CMS data. 
+%\item And then I will discuss our main backgrounds and how we are estimating them.
+%\item Lastly, I'll end with a discussion about some of the things that we are looking
+%  forward to in Run 3.
+%}
+
+\section{Background}
+
+\subsection{Handedness and Weak Interactions}
+
+\begin{frame}{Parity Violation in $\beta$ Decay}
+  \begin{itemize}
+    \item The parity operator $\hat{P}$ corresponds to a discrete 
+      transformation $x \rightarrow -x$, etc.
+    \item In 1957 C.S. Wu studied the beta decay:
+      $\ce{^{60}_{27}Co \rightarrow ^{60}_{28}Ni + e^{-} + \bar{\nu_{e}}}$
+  \end{itemize}
+  \begin{columns}
+    \begin{column}{0.65\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{figures/wu-experiment.png}
+      \end{figure}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \begin{block}{}
+        If parity were conserved: expect equal rate for producing $e^{-}$ in directions
+            along and opposite to the nuclear spin.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \begin{itemize}
+    \item Observed \boldcol{UMNMaroon}{electrons emitted preferentially} in direction 
+      opposite to applied field.
+  \end{itemize}
+  \begin{block}{}
+    \centering
+      Conclude \boldcol{UMNSunny}{parity is violated} in weak interactions.
+  \end{block}
+\end{frame}
+
+\note[itemize]{
+\footnotesize
+\item No time for an outline, lets just dive right in. 
+ The story really begins with the discovery of parity violation.
+\item Parity symmetry (which is also informally some called the mirror symmetry) is the idea that for a given physical process, that
+  process with its spatial coordinates inverted - or reflected in a mirror - 
+  also represents another perfectly possible physical process.
+\item And in 1957, Wu conducted this experiment in which she aligned the spins 
+  of Cobalt-60 nuclei in a strong magnetic field. Cobalt-60 beta decays in a weak 
+  interaction to nickel, an electron and antineutrino, and Wu recorded the directions 
+  of the emitted electrons relative to the magnetic field. 
+\item If we consider this process under a parity transformation, the only kinematic quantity that changes sign
+  is the vector momentum of the emitted electrons, since the magnetic field and magnetic moment are
+  both axial vectors. So, if parity were conserved in weak interactions, the rate at which electrons were
+  emitted at a certain direction relative to the magnetic field would be identical to the rate in the opposite
+  direction. And this is what they expected to find.
+\item Experimentally however, it was observed that most electrons were emitted in the hemisphere opposite
+  to the direction of the applied magnetic field, thus providing a clear demonstration that parity is violated 
+  in weak interactions.
+\item It was a bizarre and surprising result, with the implication being that the weak force is left-handed.
+}
+
+\subsection{Left-Right Symmetric Models}
+
+\begin{frame}{Charged Weak Interactions}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{figure}
+        \centering
+        \input{../figures/theory/left-w-vertex}
+        \caption{The SM left-handed charged weak vertex.}
+      \end{figure}
+      \begin{itemize}
+        \item Only \boldcol{UMNMaroon}{left-handed chiral} components of 
+          particle spinors participate in charged weak interactions.
+        \item No theoretical explanation as to \emph{why} 
+          the weak force is left-handed.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{figure}
+        \centering
+        \input{../figures/theory/right-w-vertex}
+        \caption{The LRSM right-handed weak vertex.}
+      \end{figure}
+      \begin{itemize}
+        \item Introduce $W_{R}^{\pm}$ bosons to couple to \boldcol{UMNMaroon}{right-handed chiral} components of 
+        particle spinors.
+        \item Parity restored as a symmetry to the standard model.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\note[itemize]{
+\item So when we say that the weak force is left-handed, what we mean was that the W-boson couples to
+  the left-chiral component of particle spinors.
+\item This can be seen in the Feynmann Diagram on the left, where we have a lepton and a neutrino coupling 
+  to a Standard Model W boson. The contribution to the amplitude is given by this interaction vertex, which 
+  \emph{includes} a factor of the left-chiral projection operator. This means that the W boson only couples to 
+  left-chiral particle states and does not interact with right-chiral particle states.
+\item But there is no theoretical reason behind this. There's nothing in the Standard Model that tells 
+  us that the charged weak interaction vertex should include the left chiral projection operator, instead 
+  of the right chiral projection operator, or no projection operator at all, which is the case for QED 
+  and QCD. This is just something that has been determined from experiment. 
+\item Left-right symmetric models add right-handed W bosons, meaning heavier W bosons that couple to the right chiral 
+  component of particle spinors, and you can see that there is a factor of the right chiral projection operator at 
+  the vertex.
+\item And lastly, if we assume that the two coupling constants are equal to each other, then there is an explicit left-right 
+  symmetry and parity is restored to the standard model.
+}
+
+\begin{frame}{Left-Right Symmetric Models}
+  \begin{block}{Postulate of Left-Right Symmetric Models}
+    The weak force's left-handed nature is a low energy phenomenon -- 
+    the result of a broken left-right symmetry that is restored at a multi-TeV energy scale.
+  \end{block}
+  \vfill
+  \begin{table}
+    \input{../tables/gauge-groups.tex}
+    \caption{Summary of the Left-Right Symmetric SM
+    with new extensions in \textcolor{red}{red}.}
+  \end{table}
+\end{frame}
+
+\note[itemize]{
+\item OK so to just wrap up the background here.
+\item Left-right symmetric models postulate that parity violation is a low energy phenomenon, the result 
+ of a broken symmetry that is restored at high energies.
+\item The left-right symmetric standard model is summarized in this table, with standard model extensions 
+  highlighted in red.
+\item Most botably, we have extended the electroweak gauge group to include an SU(2)R symmetry group 
+    in addition to the usual SU(2)L. 
+\item Then, just as the left-handed fermions are doublets under SU(2)L, so too now do right-handed fermions 
+  form doublets under SU(2)R.
+\item Of course, we must add right-handed neutrinos to go with the right-handed leptons to form doublets
+  under SU(2)R. 
+\item And these right-handed fermions have charged current interactions mediated by the charged gauge bosons 
+  of SU(2)R, which we can call WR±. 
+\item There is also a heavy neutral boson called Z prime which also has its own, completely seperate search.
+}
+
+\begin{frame}{Feynman Diagram}
+  \begin{figure}
+    \centering
+    \input{../figures/theory/wr-decay}
+    \caption{$\mathrm{W_R}$ decay chain. 
+    The final state observables are two same-flavor leptons
+    and two jets.}
+  \end{figure}
+\end{frame}
+
+\note[itemize]{
+  \item This feynmann diagram gives us a sense of what exactly we are looking for. 
+  \item We have two qaurks coming in, annihilating and producing a right-handed W. 
+  That right-handed W decays to a lepton and a heavy neutrino. That heavy neutrino 
+  then decays back into a same flavor lepton and an off-shell right handed W, which 
+  then decays into two quarks which hadronize to jets. 
+  \item So, the observable objects in the decay are two same flavor leptons, and two jets. 
+}
+
+\section{Search Strategy} % \ssection{Search Strategy}
+
+\subsection{Resonance Searches}
+
+\begin{frame}{Resonance Search}
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \vfill
+      {The cross section a \boldcol{UMNSunny}{Breit-Wigner distribution}:
+      $$
+        \sigma \propto \frac{1}{\left(m_{lljj}^{2} - m_{W_R}^{2}\right)^{2} + \Gamma^{2} m^{2}_{W_R}}
+      $$}
+      \begin{figure}
+        \centering
+        \input{../figures/theory/resonance}
+      \end{figure}
+    \end{column}
+    \begin{column}{0.59\textwidth}
+      \begin{block}{Bump Huntin'}
+        Search for an excess of events in the \boldcol{UMNMaroon}{four object invariant mass} 
+        spectrum consisting of the two leptons and two jets ($m_{\ell \ell j j}$).
+      \end{block}
+      \begin{figure}
+        \centering
+        \resizebox{0.9\linewidth}{!}{%
+          \input{../figures/theory/wr-decay-annotated}%
+      }
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\note[itemize]{
+  \footnotesize
+  \item The general strategy that we use to search for the right-handed W and heavy 
+    neutrino is the classic resonance search, otherwise known as bump hunting. 
+  \item The way that this works is we add up the four-momentum vectors of our final 
+    state products and square them to get their invariant mass, which we call the 
+    four-object invariant mass, or mlljj. 
+  \item Then by conservation of energy and momentum, the four-object invariant mass is 
+    equal to the mass of the right-handed W.
+  \item This is important because the right-handed W is a propagator, and so it takes a 
+    factor of 1 over mlljj squared minus mw squared in its matrix element, where mw is 
+    the on shell mass. So when mlljj approaches the on shell mass of the right 
+    handed w, there is a resonance in the cross section.
+  \item Now if you look at this cartoon I've drawn in the bottom left you can see how 
+   this appears on four object invariant mass spectrum. 
+  \item The number of events on the y-axis is really just the cross section times the 
+   luminosity, so this excess of events over standard model background expectations is due to this 
+   resonance in the WR cross section.
+  \item And I should say that the reason we favor this particular decay mode, is that we can also use this 
+    same technique to measure the mass of the heavy neutrino by looking at the ljj mass spectrum. So in a 
+    sense we can kill two birds with one stone by examining this particular decay mode. 
+}
+
+\begin{frame}[t]{Analysis Topologies}
+  \begin{columns}[t]
+    \begin{column}{0.32\textwidth}
+      \centering
+      \framesection{CMS Jets}
+      \resizebox{0.99\linewidth}{!}{%
+      \input{../figures/analysis/cms-jets}%
+      }
+      {
+        \footnotesize
+        \begin{itemize}
+          \item CMS jets are clustered with the anti $k_t$ (AK) algorithm.
+          \item Jet sizes are defined in terms of the angular separation, $\left(\Delta R = \sqrt{\Delta \phi^{2} + \Delta \eta^{2}}\right)$
+        \end{itemize}
+      }
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      \framesection{Resolved Region}
+      \resizebox{0.99\linewidth}{!}{%
+      \input{../figures/analysis/resolved-region}%
+      }
+      {
+        \footnotesize
+        \begin{itemize}
+          \item $m_{N} > 0.1 m_{W_{R}}$
+          \item Four isolated objects: two leptons and two AK4 jets.
+          \item Signal in four-object mass spectrum $m_{\ell \ell j j}$.
+        \end{itemize}
+      }
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \centering
+      \framesection{Boosted Region}
+      \resizebox{0.99\linewidth}{!}{%
+      \input{../figures/analysis/boosted-region}%
+      }
+      {
+        \footnotesize
+        \begin{itemize}
+          \item $m_{N} < 0.1 m_{W_{R}}$
+          \item Two isolated objects: one lepton and one AK8 jet.
+          \item Signal in di-object mass spectrum $m_{\ell J}$.
+        \end{itemize}
+      }
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\note[itemize]{
+  \footnotesize
+  \item So when one of our final state quarks hadronizes, it produces a shower of particles that 
+    pass through the CMS detector in a narrow cone. Rather than trying to track the energy and 
+    momentum of each one of those particles, CMS clusters these particles together using something 
+    called the anti kt algorithm and calls the collection of those particles a jet and we look at 
+    the energy and momenta of that object as a whole.
+  \item The sizes of these jets are defined in terms of the angular separation or angular distance 
+    $\Delta R$, which is a measure of how collimated the particles in a jet are. The two most common 
+    jet sizes are $\Delta R = 0.4$ and $\Delta R = 0.8$.
+  \item There are two regions in the analysis, and so far I have only discussed this first one, the 
+    resolved region. In the resolved search, we are searching for four isolated objects: two leptons, which
+    I have drawn in green here, and two ak4 jets which are these blue cones. And we search for signal 
+    in the four object invariant mass spectrum.
+  \item But, there is another region called the boosted region. This occurs when the mass of the 
+    right-handed W is much greater than the mass the heavy neutrino. Then, when the WR decays, the heavy 
+    neutrino will be produced with a large momentum, and then the three decay predicts of the heavy 
+    neutrino will be highly collimated as they pass through the detector. So then rather than try to 
+    reconstruct each of these objects individually, we cluster them into an AK8 jet, which we also call 
+    a fat jet.
+  \item So then in the boosted region, we have two objects: a well isolated lepton shown here in green, 
+    and the neutrino decay products, which we reconstruct as a fat jet. We then use the invariant mass 
+    of these two objects to search for signal.
+  \item But for the rest of this talk, I am only going to focus on the resolved region. 
+}
+
+\begin{frame}{Analysis Backgrounds}
+  \begin{block}{Dominant Backgrounds}
+    The two main backgrounds that result in an $\ell \ell j j$ final state are 
+    \boldcol{UMNMaroon}{Drell-Yan (DY)} and \boldcol{UMNMaroon}{$\mathbf{t\bar{t}}$}.
+  \end{block}
+  \vfill
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{figure}
+        \centering
+        \input{../figures/theory/dy-process}
+        \caption{The Drell-Yan (DY) process.}
+      \end{figure}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{figure}
+        \centering
+        \input{../figures/theory/tt-process}
+        \caption{$\mathrm{t\bar{t}}$ decay.}
+      \end{figure}
+    \end{column}
+  \end{columns}
+  \centering
+  \boldcol{UMNSunny}{Minor Backgrounds include W+Jets, Single Top, Diboson, Triboson}
+\end{frame}
+
+\note[itemize]{
+\item Of course, in order to be able to observe any signal events, you have to know your backgrounds extremely
+  well. 
+\item The two main backgrounds that result in a two lepton two jet final state are drell-yan and tt bar.
+\item In Drell-yan events we have qq bar annhilation producing a Z or a photon, which decays to two leptons,
+  and we get two jets from ISR or FSR radiation. 
+\item In ttbar, if you look at this top quark here, the top quark decays to a bottom and a W, and the W decays 
+  to a lepton and a neutrino. And a similar thing with the anti top quark. So in tt bar events we also have a 
+  two lepton and two jet final state. 
+\item A major difference between them that I want to point out is that with drell-yan events, the leptons are 
+  constrained to have the same-flavor. Whereas with ttbar events, the top quarks decay independently, so the leptons 
+  can have different flavors. And we are going to use this to our advantage in the next couple of slides here.
+  }
+
+\subsection{Analysis Regions}
+
+\begin{frame}{Analysis Regions}
+  \begin{figure}
+    \centering
+    \input{../figures/analysis/analysis-regions}
+    \caption{A schematic diagram of the analysis region. The DY background is estimated from 
+    the DY CR (blue).The backgrounds from $tW$ and $t\bar{t}$ production are estimated from the flavor CR 
+    (green), where opposite flavor (OF) leptons are require.}
+    \label{fig:dm-mass-scale}
+  \end{figure}
+\end{frame}
+
+\note[itemize]{
+  \item We estimate our backgrounds with Monte Carlo simulation, and we define these different regions of
+    phase space in order to help simulate our backgrounds and derive corrections to them. 
+  \item Starting in the top right corner is the signal region. In our signal region we have two same flavor leptons,
+    so two electrons or two muons, and on the x-axis is the dilepton invariant mass. So, we
+    require in the signal region that the invariant mass of the dileptons be considerably high, above 400 GeV.
+    We do this in order to reduce our backgrounds.
+  \item If we go to the left on the x-axis, between 60 and 150 GeV is our Drell-Yan control region. The Z peak
+    is located here at about 91 GeV, so this area is dominated by Drell-Yan background. So we define our Drell
+    Yan control region here to derive corrections to our Drell-Yan Monte Carlo.
+  \item Lastly, in our flavor control region we have the same 400 GeV dilepton mass requirement that we have 
+    in the signal region, but now we require two opposite flavor leptons, so one electron and one muon. 
+  \item This region is dominated by ttbar decay, and we have no Drell-Yan or signal in this region, so we use 
+    this region to derive corrections to our ttbar background.
+}
+
+\section{Background Estimations}
+
+\begin{frame}{Signal Region Backgrounds}
+  \begin{columns}
+    \begin{column}{0.50\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../figures/analysis/sr-bkg-frac-mumu.png}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+        \vspace*{-15mm}
+        \centering
+        \resizebox{\columnwidth}{!}{%
+        \input{../figures/analysis/signal-region}%
+        }
+      \vspace{1ex} 
+      \begin{block}{Background Composition}
+        As $m_{\ell\ell jj}$ increases, the background becomes more dominated by Drell-Yan (Z+jets).
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\note[itemize]{
+  \item So when I said that our main backgrounds in the signal region were Drell-Yan and $t\bar{t}$, this 
+    plot quantifies that. 
+  \item And I should say that the Monte Carlo and Data samples I am going to show are from Run 2 2018.
+  \item So here we are looking at backgrounds in the signal region, so two same flavor leptons, muons in 
+    this case, with a dilepton mass above 400 GeV.
+  \item The x-axis is the four-object mass, our discriminating variable, and on the y-axis I'm showing the 
+    contribution of each individual background to the total background.
+  \item So we can see that at low mass around 75 percent of the background is $t\bar{t}$, and only around 20
+   percent is Drell-yan. 
+  \item And then as we go up in mass we get less $t\bar{t}$ and more Drell-Yan, and from the ratio plot it looks 
+  like they contribute roughly the same at around 2.4 TeV.
+  \item And then up in these really high four-object masses we become more Drell-Yan dominant, making up about 
+  60 to 65 percent of the background. 
+  \item And so for the purposes of estimating our backgrounds, the important thing to keep in mind is that 
+   at low masses we are $t\bar{t}$ dominant, and at high masses we are more Drell-Yan dominant. 
+}
+
+\subsection{$t\bar{t}$ and DY Modeling}
+
+\begin{frame}{EXO-20-002: Flavor Control Region}
+  \begin{columns}
+    \begin{column}{0.50\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../figures/histograms/exo-20-002/PostFit_WRCand_Mass_HNWR_EMu_Resolved_SR.pdf}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+        \vspace*{-15mm}
+        \centering
+        \resizebox{\columnwidth}{!}{%
+        \input{../figures/analysis/flavor-cr}%
+        }
+      \vspace{1ex} 
+      \begin{block}{$t\bar{t}$ Modeling}
+        Simulation of $t\bar{t}$ shows good agreement with data in the $e\mu$ sideband.
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\note[itemize]{
+  \item So now moving down the y-axis to our flavor control region, which again has the high 
+    dilepton mass but opposite flavor leptons, we can check the modeling of the $t\bar{t}$ 
+    background. 
+  \item Here, we have the different backgrounds stacked on top of each other. This bottom plot 
+    is a ratio directly comparing the total simulation to data.
+  \item And overall it agrees pretty well, especially at the lower four object masses, where 
+    we have a decent amount of statistics.
+  \item And since the only thing that differs between this control region and the signal region 
+    is the flavor of one of the leptons, it stands to reason that we can be pretty confident 
+    about the $t\bar{t}$ background modeling in our signal region too.
+  \item So now I am going to move us up here to the Drell-Yan Control Region so we can look at 
+    the Drell-Yan modeling, and this is where things get a little more interesting.
+}
+
+
+\begin{frame}{EXO-20-002: Control Region}
+  \begin{block}{Mixed Agreement}
+    Hadronic variables are mismodelled in the DY CR, due to order (LO) of the DY sample.
+  \end{block}
+  \vfill
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.90\textwidth]{%
+        ../figures/histograms/exo-20-002/Lepton_0_Pt_HNWR_SingleElectron_Resolved_DYCR.pdf}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.90\textwidth]{%
+        ../figures/histograms/exo-20-002/AfterZPtReweight_ToBeCorrected_Jet_Pt_HNWR_SingleElectron_Resolved_DYCR.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\note[itemize]{
+  \item When we first look at the Drell-Yan Control Region, we noticed that the electroweak 
+    variables are in reasonable agreement, but the hadronic variables are mismodelled.
+  \item For example, this plot on the right shows the transverse momentum of the leading jet.
+   And you can see in the ratio plot that there is a disagreement between simulation and data 
+   across the entire spectrum. 
+  \item If you compare that with the transverse momentum of the leading lepton, you can see that 
+   there is much better agreement with data.
+  \item The cause of the hadronic mismodelling is unknown. We think that in part it may be due 
+    to the fact that our Drell-Yan event generator is limited to leading order, and so this could 
+    be an effect of neglecting loop corrections, and the additional factors of the strong coupling 
+    constant and things like that.
+  \item But not knowing exactly what is wrong with the simulations makes it very to fix.
+}
+
+\begin{frame}{EXO-20-002: $p_T^{\ell \ell}$ Correction}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{%
+        ../figures/histograms/exo-20-002/BeforeZPtReweight_ZCand_Pt_HNWR_SingleElectron_Resolved_DYCR.pdf}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{}
+        \begin{itemize}
+          \item It is a known problem that the $p_T$ of the Z boson in DY simulation is not well-modeled.
+          \item A dedicated correction exists (https://doi.org/10.1140/epjc/s10052-017-5389-1), but it was not used as it contains signal events.
+          \item EXO-20-002 oberserved good agreement at NLO, thus used the NLO-to-LO ratio as reweighting values for the DY.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{EXO-20-002: $p_T^{\ell \ell}$ Correction}
+  \begin{block}{}
+    The 2018 electron channel dilepton $p_T$ distributions before (left) and after (right) applying the $p_T$ corrections.
+  \end{block}
+  \vfill
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=0.9\textwidth]{%
+        ../figures/histograms/exo-20-002/BeforeZPtReweight_ZCand_Pt_HNWR_SingleElectron_Resolved_DYCR.pdf}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=0.9\textwidth]{%
+        ../figures/histograms/exo-20-002/AfterZPtReweight_ZCand_Pt_HNWR_SingleElectron_Resolved_DYCR.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{EXO-20-002: Jet $p_T$ Correction}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{%
+        ../figures/histograms/exo-20-002/AfterZPtReweight_ToBeCorrected_Jet_Pt_HNWR_SingleElectron_Resolved_DYCR.pdf}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{}
+        \begin{itemize}
+          \item After the Z-$p_T$ correction, simulation still predicts harder jets than is observed in data.
+          \item Due to the obsence of loop corrections in the LO DY sample.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{EXO-20-002: Jet $p_T$ Reweighting}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=\textwidth]{%
+        ../figures/histograms/exo-20-002/DYReshapeRatio_2018_Resolved.pdf}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{}
+        \begin{itemize}
+          \item Derive a bin-by-bin jet-$p_T$ reweighting: $$(\text{Data} - \text{non-DY})/(\text{DY MC})$$
+          \item Apply to DY distributions in all regions.
+          \item Combine the dielectron and dimuon channels to obtain the nominal ratio for each year.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{EXO-20-002: Control Region $m_{\ell\ell j j}$}
+  \begin{block}{}
+    The $m_{\ell\ell j j}$ in the low $m_{\ell\ell}$ DY CR, before (left) and after (right) applying the DY ratio.
+  \end{block}
+  \vfill
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=0.8\textwidth]{%
+        ../figures/histograms/exo-20-002/AfterZPtReweight_WRCand_Mass_HNWR_SingleMuon_Resolved_DYCR.pdf}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=0.8\textwidth]{%
+        ../figures/histograms/exo-20-002/AfterZPtReweight_AfterDYReshape_WRCand_Mass_HNWR_SingleMuon_Resolved_DYCR.pdf}
+    \end{column}
+  \end{columns}
+  \begin{block}{}
+    \centering
+    \boldcol{UMNSunny}{The correction improves the $m_{\ell\ell j j}$ distribution in the DY CR.}
+  \end{block}
+\end{frame}
+
+\note[itemize]{
+  \item When we first look at the Drell-Yan Control Region, we noticed that the electroweak 
+    variables are in reasonable agreement, but the hadronic variables are mismodelled.
+  \item For example, this plot on the right shows the transverse momentum of the leading jet.
+   And you can see in the ratio plot that there is a disagreement between simulation and data 
+   across the entire spectrum. 
+  \item If you compare that with the transverse momentum of the leading lepton, you can see that 
+   there is much better agreement with data.
+  \item The cause of the hadronic mismodelling is unknown. We think that in part it may be due 
+    to the fact that our Drell-Yan event generator is limited to leading order, and so this could 
+    be an effect of neglecting loop corrections, and the additional factors of the strong coupling 
+    constant and things like that.
+  \item But not knowing exactly what is wrong with the simulations makes it very to fix.
+}
+
+
+\begin{frame}{EXO-20-002: Signal Region}
+  \begin{columns}
+    \begin{column}{0.50\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../figures/histograms/mass_fourobject_mumu_resolved_sr.pdf}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+        \centering
+        \resizebox{0.55\columnwidth}{!}{%
+        \input{../figures/analysis/signal-region.tex}
+        }
+      \begin{block}{Reweighting with the lead jet $p_T$}
+        \begin{itemize}
+          \item Before the correction, there is good agreement.
+          \item The corrections pull the DY MC down, out of agreement.
+          \item Excess data isn't very peak-like.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\note[itemize]{
+  \footnotesize
+  \item A previous verision of this analysis did unblind, except they used the leading jet $p_T$ spectrum to 
+   reweight on. And here are the results for the signal region. 
+  \item So the way to read this is that the Drell-Yan is already reweighted to the leading jet $p_T$, and 
+  this blue line shows what the previous background was before applying that correction.
+  \item And so we see that there is initally good agreement between our uncorrected backgrounds and data, 
+    and then once we apply the leading jet pt reweighting factors, we pull down our background out of agreement 
+    with data.
+  \item Naively, you could interpret this by saying that the leading jet pt correction worked, and this excess data that 
+  we now observe in our signal region is just signal. These are right-handed W's. And that would be nice, but it is not 
+  likely, since for signal we would expect a much more narrow peak, whereas the discrepancy we observe in our signal region 
+  here is a much more continuous slope spanning multiple TeV, which suggests that we have a modelling problem instead of 
+  actual signal. 
+  \item Hence this is why we are shifting to other variables in the future.
+}
+
+\note[itemize]{
+  \item When we first look at the Drell-Yan Control Region, we noticed that the electroweak 
+    variables are in reasonable agreement, but the hadronic variables are mismodelled.
+  \item For example, this plot on the right shows the transverse momentum of the leading jet.
+   And you can see in the ratio plot that there is a disagreement between simulation and data 
+   across the entire spectrum. 
+  \item If you compare that with the transverse momentum of the leading lepton, you can see that 
+   there is much better agreement with data.
+  \item The cause of the hadronic mismodelling is unknown. We think that in part it may be due 
+    to the fact that our Drell-Yan event generator is limited to leading order, and so this could 
+    be an effect of neglecting loop corrections, and the additional factors of the strong coupling 
+    constant and things like that.
+  \item But not knowing exactly what is wrong with the simulations makes it very to fix.
+}
+
+\section{Run 3}
+
+\begin{frame}{Looking forward to Run 3}
+  \begin{block}{Run 3 Focus}
+    Improving the DY background estimation from EXO-20-002 is a focus at the moment.
+  \end{block}
+
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \includegraphics[width=0.90\textwidth]{%
+        ../figures/histograms/lo_vs_nlo_mass_fourobject_mumu_resolves_sr.pdf}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{block}{Several Paths}
+        \begin{itemize}
+          \item Use NLO DY sample and avoid reweighting.
+          \item Stay with LO DY sample and choose a different reweighting variable.
+          \item Fit the background instead of relying on simulation.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\note[itemize]{
+  \item When we first look at the Drell-Yan Control Region, we noticed that the electroweak 
+    variables are in reasonable agreement, but the hadronic variables are mismodelled.
+  \item For example, this plot on the right shows the transverse momentum of the leading jet.
+   And you can see in the ratio plot that there is a disagreement between simulation and data 
+   across the entire spectrum. 
+  \item If you compare that with the transverse momentum of the leading lepton, you can see that 
+   there is much better agreement with data.
+  \item The cause of the hadronic mismodelling is unknown. We think that in part it may be due 
+    to the fact that our Drell-Yan event generator is limited to leading order, and so this could 
+    be an effect of neglecting loop corrections, and the additional factors of the strong coupling 
+    constant and things like that.
+  \item But not knowing exactly what is wrong with the simulations makes it very to fix.
+}
+
+\begin{frame}{LO $m_{jj}$ reweighting}
+  \begin{block}{}
+    Use same jet-$p_T$ reweighting procedure, but derive reweights from the $m_{jj}$ distribution.
+  \end{block}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.80\textwidth]{%
+        ../figures/histograms/before_mjj_reshape.pdf}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.80\textwidth]{%
+        ../figures/histograms/after_mjj_reshape.pdf}
+    \end{column}
+  \end{columns}
+  \begin{block}{}
+    \centering
+    \boldcol{UMNSunny}{The DY CR shows better agreement using $m_{jj}$ reweights compared to jet-$p_T$.}
+  \end{block}
+\end{frame}
+
+\note[itemize]{
+  \item A technique that is widely used in collider-based physics experiments is to derive and apply 
+    a reweighting function based a kinematic variable that encapsulates the mismodelling. In this case, 
+    we chose to derive the reweighting function based on the dijet mass spectrum.
+  \item The reweighting function is a simple bin-by-bin correction. This plot on the left shows the 
+    bin-by-bin values we are applying, and each factor is applied as weights to our Monte Carlo Drell-yan
+    background.
+  \item So just as an example, in this first bin the blue line for muons is at about 1.2, so if we have a Drell-Yan event
+   with a weight of 1, that weight becomes 1.2. 
+  \item This scales the Monte Carlo to agree with data in that bin, so that if we were to compare Data and Monte Carlo across
+   the entire dijet mass spectrum after reweighting, there would be good agreement between them.
+  \item And then finally, these re-weighting factors are then propagated to all of our kinematic variables 
+  across all analysis regions.
+}
+
+\begin{frame}{SR DY Reweighted by $m_{jj}$}
+  \begin{block}{}
+    $m_{jj}$ reweights do not have a large impact on the $m_{\ell \ell j j}$ distribution in the signal region.
+  \end{block}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.90\textwidth]{%
+        ../figures/histograms/mass_fourobject_premjj_mumu_resolved_sr.pdf}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.90\textwidth]{%
+         ../figures/histograms/mass_fourobject_mjj_mumu_resolved_sr.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\note[itemize]{
+  \footnotesize
+  \item Here is a plot of our four object invariant mass in the Control Region.
+  \item On the left is the four-object mass in the drell-yan control region without any reweighting applied. 
+    Looking at this bottom ratio plot, we see that there is a discrepancy between the simulation without corrections and data.  
+  \item And the discrepancy has a pretty clear slope to it, where at low mass we are underpredicting the background, and at high
+    mass we overpredict it.
+  \item The plot on the right is the same plot, except we have applied those dijet mass reweighting factors to the blue 
+   Drell-Yan background. 
+  \item And you can see that it flattens out the ratio plot, so its pulling up the background in the low mass
+   region, and pulling it down a smidge in the high mass region.
+  \item There still an overall disagreement, but this can be fixed by applying some overall scale factor, which wouldn't have 
+   really helped before the reweighting.
+  \item So, the correction works well in the Drell-Yan control region, but the question we really care about is how does this 
+    reweighting affect the signal region?
+  \item And the answer is that we don't know because that requires unblinding, and I would be in a lot of trouble if I made and 
+    showed those plots today. 
+}
+
+\begin{frame}{Fitting the background}
+  \begin{block}{Advantage}
+    Fitting the background would allow smaller bin sizes, and clearer signal peaks.
+  \end{block}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.90\textwidth]{%
+        ../figures/histograms/mass_fourobject_premjj_mumu_resolved_sr.pdf}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.90\textwidth]{%
+         ../figures/histograms/signal.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Sam's 2- vs. 3-jet studies}
+  \begin{block}{}
+    Looking for a method to select events where adding a third jet is beneficial to the $\mathrm{W_R}$ reconstruction (reduces peak width).
+  \end{block}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{%
+        ../figures/theory/feynman_3j.pdf}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.90\textwidth]{%
+         ../figures/histograms/signal.pdf}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{backup}
+\end{backup}
+
+\end{document} 
